@@ -72,5 +72,10 @@ pipeline{
 				sh 'docker run -d --name zomato-app -h zomato -p 3000:3000 dowla786/terraform-aws-cloudzomato:latest'
 			}
 		}
+		stage ("email notification"){
+			steps{
+				mail bcc: '', body: '''Hello team,jenkins job is success.''', cc: '', from: '', replyTo: '', subject: 'jenkins job', to: 'dowlatitan@gmail.com'
+			}
+		}
 	}
 }
