@@ -54,22 +54,22 @@ pipeline{
 		stage("DOcker Image Build and Push"){
 			steps{
 				script{
-				withDockerRegistry(credentialsId: 'Zomato-project', toolName: 'docker'){
-					sh "docker build -t cloudzomato . "
-					sh "docker tag cloudzomato dowla786/cloudzomato:latest"
-					sh "docker push dowla786/cloudzomato:latest"
+				withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){
+					sh "docker build -t cloudzomato1 . "
+					sh "docker tag cloudzomato dowla786/cloudzomato1:latest"
+					sh "docker push dowla786/cloudzomato1:latest"
 						}
 					}
 				}
 			}
 		stage("TRIVY is Image Scanning"){
 			steps{
-				sh "trivy image dowla786/cloudzomato:latest >trivy.txt"
+				sh "trivy image dowla786/cloudzomato1:latest >trivy.txt"
 			}
 		}
 		stage("Creating Docker Container "){
 			steps{
-				sh 'docker run -d --name zomato-app -h zomato -p 3000:3000 dowla786/cloudzomato:latest'
+				sh 'docker run -d --name zomato-app -h zomato -p 3000:3000 dowla786/cloudzomato1:latest'
 			}
 		}
 		stage ("email notification"){
